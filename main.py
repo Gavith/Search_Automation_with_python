@@ -1,12 +1,25 @@
 import webbrowser
+import argparse
 
-# search function 
-def search(what):
-    what = what.replace(" ", "+")
-    webbrowser.open(f"www.youtube.com/results?search_query={what}")
-    print(f"Searching...  {what.replace("+", " ")}")
+# CLI argument setup
+parser = argparse.ArgumentParser(description="Search on Youtube using CLI")
+parser.add_argument("-u", "--url", help="Search query text", required=True)
+parser.add_argument("--youtube", action="store_true", help="Search on youtube")
 
-# get user input
-what = input("What do you want to search? : ").strip()
-# call the search function
-search(what)
+args = parser.parse_args()
+
+# Prepare query varible
+
+query = args.url.strip()
+
+query = query.lower().replace(" ", "+")
+
+    # select platforme
+if args.youtube:
+        search_url = f"www.youtube.com/results?search_query={query}"
+else:
+        search_url = f"https://www.google.com/search?q={query}"
+
+webbrowser.open(search_url)
+print(f"Searching...  {query.replace("+", " ")}")
+
